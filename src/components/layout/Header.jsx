@@ -1,0 +1,25 @@
+import { Search, Settings, User2 } from "lucide-react";
+
+export default function Header({ onOpenMenu }) {
+    return (
+        <div className="min-w-[100vw] bg-white text-emerald-900 py-2 px-3 flex items-center justify-between"
+        >
+
+            {/* LEFT — App Name */}
+            <h1 className="text-md font-semibold text-emerald-600" style={{ fontSize: 30 }}>
+                WBusinessSuite
+            </h1>
+
+            {/* RIGHT — Actions */}
+            <div className="flex items-center text-xl text-gray-700 font-black gap-2">
+
+                <button style={{ background: "none", outline: "none", borderRadius: 0, border: "none" }}>
+                    <User2 size={20} />
+                </button> <button onClick={onOpenMenu} style={{ background: "none", outline: "none", borderRadius: 0, border: "none" }}>
+                    <Settings size={20} />
+                </button>
+            </div>
+
+        </div>
+    );
+}
