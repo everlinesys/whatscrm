@@ -5,6 +5,7 @@ import MainApp from "./MainApp";
 
 export default function App() {
   const [authMode, setAuthMode] = useState("login");
+  const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
 
   const token = localStorage.getItem("token");
 

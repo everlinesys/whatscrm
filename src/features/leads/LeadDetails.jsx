@@ -4,20 +4,20 @@ import TemplatePicker from "../../components/messaging/TemplatePicker";
 import api from "../../services/api";
 import { getNextStage } from "../../utils/stageFlow";
 import { getWhatsAppLink } from "../../utils/whatsAppLink";
-import { Book, CheckCircle, MessageCircle, Paperclip, Receipt, ReceiptIndianRupee, Send } from "lucide-react";
+import { CheckCircle, MessageCircle, Settings2, Send, FileText } from "lucide-react";
 import { ArrowLeft } from "lucide-react";
 import CataloguePicker from "../../components/messaging/CataloguePicker";
 import CreateBillModal from "../../features/billing/CreateBillModal";
 import InfoModal from "../../components/common/InfoModal";
 import { downloadFile } from "../../utils/downloadFile";
 
-export default function LeadDetails({ lead, onBack }) {
+export default function LeadDetails({ lead, onBack, onStageChanged }) {
     const [activities, setActivities] = useState([]);
     const [showTemplates, setShowTemplates] = useState(false);
     const [customMessage, setCustomMessage] = useState("");
     const [showCustom, setShowCustom] = useState(false);
     const [showCatalogue, setShowCatalogue] = useState(false);
-    const [isNewLead, setIsNewLead] = useState(false);
+    // const [isNewLead, setIsNewLead] = useState(false);
     const [showBill, setShowBill] = useState(false);
     const [showBillInfo, setShowBillInfo] = useState(false);
 
@@ -39,7 +39,7 @@ export default function LeadDetails({ lead, onBack }) {
     useEffect(() => {
         api.get(`/leads/${lead.id}/activities`).then((res) => {
             setActivities(res.data);
-            setIsNewLead(res.data.length <= 1);
+            // setIsNewLead(res.data.length <= 1);
 
         });
 
@@ -49,37 +49,7 @@ export default function LeadDetails({ lead, onBack }) {
         const res = await api.get(`/leads/${lead.id}/activities`);
         setActivities(res.data);
     };
-    const sendFullCatalogue = async () => {
-        const businessId = localStorage.getItem("businessId");
 
-        const res = await api.get(`/catalogue/${businessId}`);
-
-        const items = res.data.filter((i) => i.active);
-
-        if (!items.length) return;
-
-        const message =
-            "Our Services:\n\n" +
-            items
-                .map(
-                    (i) =>
-                        `• ${i.name} — ₹${i.price} (${i.durationMin} min)`
-                )
-                .join("\n") +
-            "\n\nReply to book 🙂";
-
-        // Log activity
-        await api.post("/activity/message", {
-            leadId: lead.id,
-            message,
-        });
-
-        // Open WhatsApp
-        const link = getWhatsAppLink(lead.phone, message);
-        window.open(link, "_blank");
-
-        await refreshActivities();
-    };
     const handleSendBill = async () => {
         const res = await api.get(`/bills/lead/${lead.id}`);
 
@@ -97,7 +67,7 @@ export default function LeadDetails({ lead, onBack }) {
 
     const sendBill = async (bill) => {
         const billUrl = bill.fileUrl;
-        const baseUrl = import.meta.env.VITE_API_URL;
+        const baseUrl = import.meta.env.VITE_API_URL_STATIC;
 
         // window.open(`${baseUrl}${billUrl}`, "_blank");
         // 🔽 DOWNLOAD BILL
@@ -178,11 +148,13 @@ export default function LeadDetails({ lead, onBack }) {
                         }
 
                         await refreshActivities();
+                        onStageChanged();
+                        onBack();
 
 
                     }}
                     className="p-1 active:scale-95 text-right"
-                    style={{ background: "none", border: "none", display: "flex", flexDirection: "column", alignItems: "flex-end" }}
+                    style={{ background: "none", border: "none", outline: "none", display: "flex", flexDirection: "column", alignItems: "flex-end" }}
                 >
                     <CheckCircle size={22} />
                     <p className="text-xs mt-1" style={{ fontSize: 12 }}>mark {getNextStage(lead.stage).toLowerCase()}</p>
@@ -209,10 +181,10 @@ export default function LeadDetails({ lead, onBack }) {
                     onClick={handleSendBill}
 
 
-                    className="fixed bottom-43 right-5  p-4 rounded-full shadow-lg active:scale-95"
+                    className="fixed bottom-40.5 right-5  p-4 rounded-full shadow-lg active:scale-95"
                     style={{ background: "white", color: "green" }}
                 >
-                    <ReceiptIndianRupee size={22} />
+                    <FileText size={22} />
                     {/* <p className="text-xs mt-1" style={{ fontSize: 12 }}>send Bill</p> */}
                 </button>}
 
@@ -220,7 +192,7 @@ export default function LeadDetails({ lead, onBack }) {
                     onClick={() => setShowCatalogue(true)}
                     className="fixed bottom-29 right-5  p-4 rounded-full shadow-lg active:scale-95"
                     style={{ background: "white", color: "green" }}  >
-                    <Paperclip size={22} />
+                    <Settings2 size={22} />
                     {/* <p className="text-xs mt-1" style={{ fontSize: 8 }}>catalogue</p> */}
                 </button>
                 <button
@@ -354,8 +326,8 @@ export default function LeadDetails({ lead, onBack }) {
                 </div>
             )}
             {/* 🧠 AUTO SUGGEST */}
-            {lead.stage === "LEAD" && isNewLead && (
-                <div className="bg-white fixed bottom-16 right-4 px-3 py-2 border-b flex gap-2 overflow-x-auto">
+            {/* {lead.stage === "LEAD" && isNewLead && (
+                <div className="bg-white fixed bottom-46 right-4 px-3 py-2 border-b flex gap-2 overflow-x-auto">
 
                     <button
                         onClick={sendFullCatalogue}
@@ -364,7 +336,7 @@ export default function LeadDetails({ lead, onBack }) {
                         Send catalogue
                     </button>
                 </div>
-            )}
+            )} */}
             {showBill && <CreateBillModal
                 lead={lead}
                 isOpen={showBill}

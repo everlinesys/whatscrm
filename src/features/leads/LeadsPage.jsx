@@ -1,17 +1,40 @@
 import { useEffect, useState } from "react";
-import { getNextStage } from "../../utils/stageFlow";
 import api from "../../services/api";
 import { getWhatsAppLink } from "../../utils/whatsAppLink";
 import TemplatePicker from "../../components/messaging/TemplatePicker";
-import LeadDetails from "./LeadDetails";
 import { formatWhatsAppTime } from "../../components/ui/WhatsappFormatter";
-import { Search } from "lucide-react";
+import { FileText, Search } from "lucide-react";
 
 export default function LeadsPage({ stage, refresh, onOpenLead }) {
     const [leads, setLeads] = useState([]);
     const [selectedLead, setSelectedLead] = useState(null); // template modal
 
     const [query, setQuery] = useState("");
+
+    const emptyMessages = {
+        LEAD: {
+            title: "No new leads",
+            subtitle: "Add your first lead to start tracking conversations",
+        },
+        BOOKED: {
+            title: "No bookings",
+            subtitle: "Booked customers will appear here",
+        },
+        ACTIVE: {
+            title: "No active customers",
+            subtitle: "Customers currently in service will show here",
+        },
+        DONE: {
+            title: "Nothing completed yet",
+            subtitle: "Completed services will appear here",
+        },
+        FOLLOW_UP: {
+            title: "No follow-ups pending",
+            subtitle: "Follow-up reminders will show here",
+        },
+    };
+
+
 
     // 🔄 Fetch leads by stage
     useEffect(() => {
@@ -57,6 +80,23 @@ export default function LeadsPage({ stage, refresh, onOpenLead }) {
             </div>
 
 
+            {filteredLeads.length === 0 && (
+                <div className="flex flex-col items-center justify-center py-16 text-center text-gray-500">
+
+                    <div className="bg-emerald-100 p-6 rounded-full mb-4">
+                        <FileText size={48} className="text-emerald-700" />
+                    </div>
+
+                    <div className="text-lg font-semibold text-gray-700">
+                        {emptyMessages[stage]?.title}
+                    </div>
+
+                    <div className="text-sm opacity-70 mt-1 max-w-xs">
+                        {emptyMessages[stage]?.subtitle}
+                    </div>
+
+                </div>
+            )}
 
             {/* 🟢 LEAD LIST */}
             {

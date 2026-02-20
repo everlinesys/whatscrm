@@ -1,16 +1,15 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 import AddCatalogueModal from "./AddCatalogueModal";
-import { Plus, Trash2 } from "lucide-react";
+import { Plus, Trash2, ArrowLeft } from "lucide-react";
 
-export default function CatalogueManager() {
+export default function CatalogueManager({ onBack }) {
     const [items, setItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
-    const businessId = localStorage.getItem("businessId");
-
+    // 🟢 LOAD ITEMS (tenant-safe)
     const loadItems = async () => {
-        const res = await api.get(`/catalogue/${businessId}`);
+        const res = await api.get("/catalogue/my");
         setItems(res.data);
     };
 
@@ -19,12 +18,17 @@ export default function CatalogueManager() {
     }, []);
 
     return (
-        <div className="fixed inset-0 bg-emerald-50 text-emerald-900 flex flex-col">
+        <div className="fixed inset-0 bg-emerald-50 text-emerald-900 flex flex-col z-31">
 
             {/* HEADER */}
-            <div className="bg-white px-4 py-3 shadow font-bold">
-                Catalogue
+            <div className="bg-[#075E54] text-white px-4 py-3 flex items-center gap-3">
+                <button onClick={onBack} style={{ background: "none" }}>
+                    <ArrowLeft />
+                </button>
+                <div className="font-semibold"> Catalogue
+                </div>
             </div>
+
 
             {/* LIST */}
             <div className="flex-1 p-4 space-y-3 overflow-y-auto">
@@ -34,6 +38,7 @@ export default function CatalogueManager() {
                         key={item.id}
                         className="bg-white p-4 rounded-xl shadow flex justify-between items-center"
                     >
+
                         {/* LEFT INFO */}
                         <div>
                             <div className="font-semibold">{item.name}</div>
@@ -50,7 +55,7 @@ export default function CatalogueManager() {
                                 {item.active ? "Active" : "Inactive"}
                             </div>
 
-                            {/* DELETE BUTTON */}
+                            {/* DELETE */}
                             <button
                                 onClick={async () => {
                                     await api.delete(`/catalogue/${item.id}`);
@@ -65,7 +70,6 @@ export default function CatalogueManager() {
                         </div>
                     </div>
                 ))}
-
 
             </div>
 

@@ -17,7 +17,7 @@ export default function PipelineTabs({ stage, onChangeStage }) {
 
     return (
 
-        <div className="max-w-[102vw] w-full fixed bottom-0 left-0 right-0 flex bg-white py-0 z-32">
+        <div className=" w-full bg-white fixed bottom-0 left-0 right-0 flex py-0 z-35">
 
             {tabs.map((tab) => {
                 const Icon = tab.icon;
