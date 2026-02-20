@@ -181,7 +181,7 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
                     onClick={handleSendBill}
 
 
-                    className="fixed bottom-40.5 right-5  p-4 rounded-full shadow-lg active:scale-95"
+                    className="fixed bottom-46 right-5  p-4 rounded-full shadow-lg active:scale-95"
                     style={{ background: "white", color: "green" }}
                 >
                     <FileText size={22} />
@@ -190,14 +190,14 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
 
                 <button
                     onClick={() => setShowCatalogue(true)}
-                    className="fixed bottom-29 right-5  p-4 rounded-full shadow-lg active:scale-95"
+                    className="fixed bottom-31 right-5  p-4 rounded-full shadow-lg active:scale-95"
                     style={{ background: "white", color: "green" }}  >
                     <Settings2 size={22} />
                     {/* <p className="text-xs mt-1" style={{ fontSize: 8 }}>catalogue</p> */}
                 </button>
                 <button
                     onClick={() => setShowTemplates(true)}
-                    className="fixed bottom-17 right-5  p-4 rounded-full shadow-lg active:scale-95"
+                    className="fixed bottom-16 right-5  p-4 rounded-full shadow-lg active:scale-95"
                     style={{ background: "white", color: "green" }}
                 >
                     <MessageCircle size={22} />

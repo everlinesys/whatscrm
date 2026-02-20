@@ -2,15 +2,19 @@ import { useEffect, useState } from "react";
 import api from "../../services/api";
 import AddCatalogueModal from "./AddCatalogueModal";
 import { Plus, Trash2, ArrowLeft } from "lucide-react";
+import { FileText } from "lucide-react";
 
 export default function CatalogueManager({ onBack }) {
     const [items, setItems] = useState([]);
     const [showModal, setShowModal] = useState(false);
 
+    const [loading, setLoading] = useState(true);
+
     // 🟢 LOAD ITEMS (tenant-safe)
     const loadItems = async () => {
         const res = await api.get("/catalogue/my");
         setItems(res.data);
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -28,7 +32,17 @@ export default function CatalogueManager({ onBack }) {
                 <div className="font-semibold"> Catalogue
                 </div>
             </div>
-
+            {!loading && items.length === 0 && (
+                <div className="flex flex-col items-center mt-16 opacity-70">
+                    <FileText size={40} />
+                    <div className="mt-3 font-semibold">
+                        No items yet
+                    </div>
+                    <div className="text-sm">
+                        Your catalogue items will appear here once created
+                    </div>
+                </div>
+            )}
 
             {/* LIST */}
             <div className="flex-1 p-4 space-y-3 overflow-y-auto">
@@ -76,7 +90,7 @@ export default function CatalogueManager({ onBack }) {
             {/* FLOATING ADD BUTTON */}
             <button
                 onClick={() => setShowModal(true)}
-                className="fixed bottom-35 right-5 bg-emerald-600 text-white p-4 rounded-full shadow-lg active:scale-95"
+                className="fixed bottom-10 right-5 bg-emerald-600 text-white p-4 rounded-full shadow-lg active:scale-95"
             >
                 <Plus size={24} />
             </button>

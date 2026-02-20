@@ -17,7 +17,7 @@ export default function PipelineTabs({ stage, onChangeStage }) {
 
     return (
 
-        <div className=" w-full bg-white fixed bottom-0 left-0 right-0 flex py-0 z-35">
+        <div className="w-full bg-white fixed bottom-0 left-0 right-0 flex py-0 z-35">
 
             {tabs.map((tab) => {
                 const Icon = tab.icon;
@@ -29,15 +29,20 @@ export default function PipelineTabs({ stage, onChangeStage }) {
                         onClick={() => onChangeStage(tab.value)}
                         className="flex flex-col items-center text-xs z-10 px-0 outline-none focus:outline-none"
                         style={{ background: "none", flex: 1, padding: "0.5rem 0", outline: "none", borderRadius: 0, border: "none", color: active ? "#065f46" : "#374151" }}
-                    >
-                        <Icon
-                            size={25}
-                            className={
-                                active
-                                    ? "text-emerald-900"
-                                    : "text-gray-700"
-                            }
-                        />
+                    > <div className={ active
+                                        ? "bg-emerald-100 rounded-full px-4 py-1"
+                                        : "px-4 py-1"}
+                    
+                    // "bg-emerald-100 p-6 rounded-full mb-4"
+                     >
+                            <Icon
+                                size={25}
+                                className={
+                                    active
+                                        ? "text-emerald-900"
+                                        : "text-gray-700"
+                                }
+                            /> </div>
 
                         <span
                             className={
