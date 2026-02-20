@@ -7,7 +7,7 @@ export default function Header({ onOpenMenu, onOpenProfile }) {
 
             {/* LEFT — App Name */}
             <h1 className="text-md font-semibold text-emerald-600" style={{ fontSize: 30 }}>
-                WBusinessSuit
+                WBusinessSuite
             </h1>
 
             {/* RIGHT — Actions */}
