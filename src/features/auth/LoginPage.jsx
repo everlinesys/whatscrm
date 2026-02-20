@@ -1,20 +1,32 @@
 import { useState } from "react";
 import api from "../../services/api";
 import AuthLayout from "./AuthLayout";
+import Toast from "../../components/common/Toast";
 
 export default function LoginPage({ onLogin, goToRegister }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const [toast, setToast] = useState({
+    show: false,
+    message: "",
+  });
   const handleLogin = async () => {
-    const res = await api.post("/auth/login", {
-      email,
-      password,
-    });
+    try {
+      const res = await api.post("/auth/login", {
+        email,
+        password,
+      });
 
-    localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.token);
 
-    onLogin(); // 🔥 open app
+      onLogin();
+    } catch (err) {
+
+      setToast({
+        show: true,
+        message: err.response?.data?.message || "Login failed",
+      });
+    }
   };
 
   return (
@@ -53,7 +65,11 @@ export default function LoginPage({ onLogin, goToRegister }) {
             Register
           </button>
         </div>
-
+        <Toast
+          isOpen={toast.show}
+          message={toast.message}
+          onClose={() => setToast({ show: false, message: "" })}
+        />
       </div>
 
     </AuthLayout>

@@ -25,6 +25,7 @@ a:hover {
 }
 
 body {
+  background: #ffffff;
   margin: 0;
   display: flex;
   place-items: center;
@@ -86,4 +87,8 @@ button:focus-visible {
 
 .animate-fade-in {
   animation: fade-in 0.2s ease-out;
+}
+html, body {
+  touch-action: manipulation;
+  overscroll-behavior: none;
 }

@@ -44,22 +44,26 @@ export default function CataloguePicker({ onSend, onClose }) {
         <button
           key={item.id}
           onClick={() => toggle(item.id)}
-          className={`w-full p-3 rounded text-left ${
-            selected.includes(item.id)
+          className={`w-full p-3 rounded text-left ${selected.includes(item.id)
               ? "bg-emerald-600"
               : "bg-emerald-800"
-          }`}
+            }`}
         >
           {item.name} — ₹{item.price}
         </button>
       ))}
+      {items.length === 0 && (
+        <div className="w-full p-3 rounded text-center bg-emerald-800">
+          No items in catalogue. Please add items from dashboard.
+        </div>
+      )}
 
-      <button
+      {selected.length > 0 && <button
         onClick={sendCatalogue}
         className="w-full bg-green-600 py-2 rounded"
       >
         Send Selected
-      </button>
+      </button>}
 
       <button
         onClick={onClose}

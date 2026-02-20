@@ -51,7 +51,7 @@ export default function LeadsPage({ stage, refresh, onOpenLead }) {
     });
 
     return (
-        <div className="flex-1 space-y-4 overflow-y-auto pb-24">
+        <div className="flex-1 fixed inset-0 top-13  overflow-y-auto pb-24 bg-emerald-50">
             {/* 🔍 SEARCH BAR */}
 
             <div className="bg-white text-gray-500 rounded-full px-4 py-2 flex items-center gap-2 shadow-sm">
@@ -81,7 +81,7 @@ export default function LeadsPage({ stage, refresh, onOpenLead }) {
 
 
             {filteredLeads.length === 0 && (
-                <div className="flex flex-col items-center justify-center py-16 text-center text-gray-500">
+                <div className="flex flex-col items-center justify-center  text-center text-gray-500">
 
                     <div className="bg-emerald-100 p-6 rounded-full mb-4">
                         <FileText size={48} className="text-emerald-700" />

@@ -13,6 +13,7 @@ import InfoModal from "../components/common/InfoModal";
 import ProfilePage from "../features/profile/ProfilePage";
 import PresetsComingSoon from "../features/message-presets/PresetsComing";
 
+
 export default function MainApp() {
   const [stage, setStage] = useState("LEAD");
   const [showModal, setShowModal] = useState(false);
@@ -53,6 +54,7 @@ export default function MainApp() {
 
   return (
     <div className="min-h-screen bg-white text-white flex flex-col shadow-lg relative">
+
 
       <Header
         onOpenMenu={() => setMenuOpen(true)}

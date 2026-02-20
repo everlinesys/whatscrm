@@ -168,7 +168,7 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
 
 
             {/* 🟢 CHAT AREA */}
-            <div className="flex-1 p-4 space-y-3 pb-12 overflow-y-auto">
+            <div className="flex-1 p-4 space-y-3  overflow-y-auto">
                 {activities.map((a) => (
                     <ActivityBubble key={a.id} activity={a} />
                 ))}
@@ -205,8 +205,8 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
             </div>
 
             {/* 🟩 TEMPLATE PICKER */}
-            {showTemplates && (
-                <div className="fixed bottom-10 inset-0 bg-black/60 flex items-end z-35 ">
+            {showTemplates && !showCustom && (
+                <div className="fixed bottom-0 bg-black/60 flex items-end z-34 ">
                     <div className="bg-emerald-900 w-full p-4 rounded-t-2xl text-white">
                         <h2 className="font-bold mb-2">
                             Choose Message
@@ -252,7 +252,7 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
             )}
             {/* 🟢 CUSTOM MESSAGE INPUT */}
             {showCustom && (
-                <div className="mt-3 space-y-2 fixed bottom-10 w-full z-99">
+                <div className="mt-3  fixed bottom-0 w-full z-35">
                     <textarea
                         value={customMessage}
                         onChange={(e) => setCustomMessage(e.target.value)}
@@ -285,15 +285,21 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
                             setShowCustom(false);
                             setShowTemplates(false);
                         }}
-                        className="w-full bg-green-600 py-2 rounded"
+                        className="w-full bg-emerald-600 py-2 rounded"
                     >
                         Send <Send size={16} className="inline ml-2" />
                     </button>
+                      <button
+                            onClick={() => setShowCustom(false)}
+                            className="mt-3 w-full bg-emerald-500"
+                        >
+                            Cancel
+                        </button>
                 </div>
             )}
 
             {showCatalogue && (
-                <div className="fixed bottom-16 inset-0 bg-black/60 flex items-end z-34">
+                <div className="fixed bottom-0 inset-0 bg-black/60 flex items-end z-34">
                     <div className="bg-emerald-900 w-full p-4 rounded-t-2xl text-white">
 
                         <h2 className="font-bold mb-2">
@@ -321,6 +327,7 @@ export default function LeadDetails({ lead, onBack, onStageChanged }) {
                             }}
                             onClose={() => setShowCatalogue(false)}
                         />
+                       
 
                     </div>
                 </div>
