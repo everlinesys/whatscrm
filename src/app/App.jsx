@@ -59,7 +59,7 @@ export default function App() {
         </div>
 
         {/* RIGHT SIDE: BUSINESS INSIGHT SLIDER (Visible on Desktop) */}
-        <div className="hidden lg:flex flex-1 bg-[#042f2e] text-white items-center justify-center p-12 relative overflow-hidden">
+        <div className="hidden h-screen lg:flex flex-1 bg-[#042f2e] text-white items-center justify-center p-12 relative overflow-hidden">
 
           {/* Modern Ambient Background */}
           <div className="absolute inset-0 overflow-hidden">

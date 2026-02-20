@@ -32,7 +32,7 @@ export default function LoginPage({ onLogin, goToRegister }) {
   return (
     <AuthLayout title="Login">
 
-      <div className="space-y-4">
+      <div className="space-y-4 ">
 
         <input
           placeholder="Email"
